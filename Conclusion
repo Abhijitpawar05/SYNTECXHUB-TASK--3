@@ -1,0 +1,5 @@
+The Exploratory Data Analysis of the Netflix dataset reveals significant growth in content over the years, especially after 2015. Movies dominate the platform compared to TV Shows, indicating a strong focus on film-based content.
+
+Drama and International genres appear to be the most popular categories, while the United States contributes the highest amount of content. Most movies fall within the 90–120 minutes duration range, and content ratings show a wide audience targeting strategy.
+
+Overall, the analysis demonstrates how Netflix has expanded globally and diversified its content portfolio to attract different audience segments. This project highlights the importance of data cleaning, visualization, and analytical thinking in extracting meaningful business insights from raw data.
