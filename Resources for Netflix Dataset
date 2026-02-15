@@ -1,0 +1,74 @@
+Libraries Used
+import pandas as pd          # Data manipulation
+import numpy as np           # Numerical operations
+import matplotlib.pyplot as plt   # Basic visualization
+import seaborn as sns        # Advanced visualization
+from collections import Counter   # Genre counting
+
+📌Why These Libraries?
+Library	Purpose
+Pandas	Data cleaning & manipulation
+NumPy	Numerical operations
+Matplotlib	Basic plotting
+Seaborn	Statistical visualization
+Counter	Count genre frequency
+💻 Complete Basic EDA Code Structure
+ 1. Load Dataset
+df = pd.read_csv("netflix_titles.csv")
+df.head()
+df.info()
+df.isnull().sum()
+
+ 2. Data Cleaning
+df.columns = df.columns.str.strip()
+
+df.drop(columns=['show_id'], inplace=True, errors='ignore')
+
+df['director'].fillna("Unknown", inplace=True)
+df['cast'].fillna("Unknown", inplace=True)
+df['country'].fillna("Unknown", inplace=True)
+df['rating'].fillna(df['rating'].mode()[0], inplace=True)
+
+df['date_added'] = pd.to_datetime(df['date_added'])
+df['year_added'] = df['date_added'].dt.year
+
+ 3. Movies vs TV Shows
+sns.countplot(x='type', data=df)
+plt.title("Movies vs TV Shows")
+plt.show()
+
+4. Year-wise Growth
+df['year_added'].value_counts().sort_index().plot(kind='line')
+plt.title("Content Added Per Year")
+plt.xlabel("Year")
+plt.ylabel("Count")
+plt.show()
+
+ 5. Top 10 Genres
+genres = df['listed_in'].str.split(', ')
+flat_list = [item for sublist in genres for item in sublist]
+
+top_genres = Counter(flat_list).most_common(10)
+genre_df = pd.DataFrame(top_genres, columns=['Genre', 'Count'])
+
+sns.barplot(x='Count', y='Genre', data=genre_df)
+plt.title("Top 10 Genres")
+plt.show()
+
+ 6. Top 10 Countries
+df['country'].value_counts().head(10).plot(kind='bar')
+plt.title("Top 10 Countries")
+plt.show()
+
+ 7. Rating Distribution
+sns.countplot(y='rating', data=df, order=df['rating'].value_counts().index)
+plt.title("Content Rating Distribution")
+plt.show()
+
+ 8. Movie Duration Analysis
+movies = df[df['type'] == 'Movie'].copy()
+movies['duration'] = movies['duration'].str.replace(" min","").astype(int)
+
+sns.histplot(movies['duration'], bins=30)
+plt.title("Movie Duration Distribution")
+plt.show()
